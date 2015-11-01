@@ -91,7 +91,7 @@ function deltaMastery(tree, index, rank, deltaR) {
 			if (deltaR > 0) 
 				action_sound = (data[tree][index].tier == 5) ? sounds_peak : (rank + deltaR == data[tree][index].ranks ? sounds_unlock : sounds_add);
 			else 
-				action_sound = sounds_remove;
+				action_sound = sounds_remove;			
 		}
 		var previous = masteryTierFull(tree, index);
 		// If we're removing points from alternative mastery
@@ -100,9 +100,13 @@ function deltaMastery(tree, index, rank, deltaR) {
 			setState(tree, previous, state[tree][previous], -deltaR);
 			if (MUSIC && action_sound == sounds_unlock) action_sound = sounds_add;
 		}
-		// Check if we should go 0-5 instantly
-		else if (deltaR > 0 && data[tree][index].ranks > 1 && (state[tree][index] || 0) == 0 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
-			deltaR = data[tree][index].ranks;
+		else {
+			// Check if we should go 0-5 instantly
+			if (deltaR > 0 && masteryTierEmpty(tree, data[tree][index].tier) && data[tree][index].ranks > 1 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
+				deltaR = data[tree][index].ranks;
+			// Check if it is the last point spent
+			if (MUSIC && totalPoints + deltaR == MAX_POINTS) sounds_30.play();
+		}
 		setState(tree, index, rank, deltaR);
 	}
 }
@@ -351,6 +355,13 @@ function masteryTierFull(tree, index) {
 		if (i != index && data[tree][i].tier == tier && (state[tree][i] || 0) + (state[tree][index] || 0) >= data[tree][i].ranks) 
 			return i;
     return -1;
+}
+// Same as above, but for the case of preventing invalid 0-5 acceleration.
+function masteryTierEmpty(tree, tier) {
+	for (var i in data[tree])
+		if (data[tree][i].tier == tier && (state[tree][i] || 0) > 0) 
+			return false;
+    return true;
 }
 
 function treePoints(tree, treeTier) {

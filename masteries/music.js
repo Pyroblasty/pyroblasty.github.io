@@ -11,12 +11,14 @@ CURSE_PLS["remove"] = "http://media-titanium.cursecdn.com/audio/0/802/groupfinde
 CURSE_PLS["unlock"] = "http://media-titanium.cursecdn.com/audio/0/792/global-button_large.mp3";
 CURSE_PLS["peak"] = "http://media-titanium.cursecdn.com/audio/0/804/groupfinder-player_ready.mp3";
 CURSE_PLS["flush"] = "http://media-titanium.cursecdn.com/audio/0/798/groupfinder_player_leaves.mp3";
+CURSE_PLS["full"] = "http://media-titanium.cursecdn.com/audio/0/810/summon_champion.mp3";
+
 
 var MUSIC = false; // does not cause the crime of hotlinking to excessive levels if you don't turn on the music
 
 var themes_count = 0; // counter for loading themes
 var BGM, BGM_o, BGM_d, BGM_u; // we don't load the themes if the user does not request it
-var sounds_add, sounds_remove, sounds_unlock, sounds_peak, sounds_return;
+var sounds_add, sounds_remove, sounds_unlock, sounds_peak, sounds_return, sounds_30;
 var action_sound = null;
 var ignore_music = true; 
 var music_on = false; // the actual music on/off switch. does not turn off sounds.
@@ -75,6 +77,7 @@ function mute_music() {
 		sounds_unlock = new Howl({urls:[CURSE_PLS["unlock"]]});
 		sounds_peak = new Howl({urls:[CURSE_PLS["peak"]]});
 		sounds_return = new Howl({urls:[CURSE_PLS["flush"]]});
+		sounds_30 = new Howl({urls:[CURSE_PLS["full"]]});
 		
 		MUSIC = true;
 	}
