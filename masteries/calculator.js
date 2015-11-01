@@ -627,7 +627,7 @@ $(function(){
                 .addClass("tree-summary")
                 .addClass(treeNames[tree])
                 .attr("data-idx", tree)
-                .text(0)
+                .text(treeNames[tree] + ": " + 0)
                 .css({
                     left: TREE_OFFSET * tree + 100,
                     cursor: "pointer",
