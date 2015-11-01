@@ -31,20 +31,10 @@ function calculate_volume(level) {
 
 // This is supposed to be simple and work flawlessly, but sometimes it behaves in a weird way.
 function updateMusic() {
-	if (MUSIC) {
-		BGM.volume(music_on ? 0.8 - totalPoints * 0.015 : 0.0);
-		for (var tree=0; tree<3; tree++) {
-			var theme;
-			switch (tree)
-			{
-				case 0: theme = BGM_o; break;
-				case 1: theme = BGM_u; break;
-				case 2: theme = BGM_d; break;
-				default: break;
-			}
-			theme.volume(music_on ? calculate_volume(treePoints(tree)) : 0.0);
-		}
-	}
+	BGM.volume(music_on ? 0.8 - totalPoints * 0.015 : 0.0);
+	BGM_o.volume(music_on ? calculate_volume(treePoints(0)) * 0.7 : 0.0); // offence is a bit too loud
+	BGM_u.volume(music_on ? calculate_volume(treePoints(1)) * 0.9: 0.0); // so is utility
+	BGM_d.volume(music_on ? calculate_volume(treePoints(2)) : 0.0);
 	if (action_sound != null) action_sound.play();
 	action_sound = null;
 }
