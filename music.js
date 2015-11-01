@@ -31,7 +31,7 @@ function calculate_volume(level) {
 }
 
 function updateMusic() {
-	if (!ignore music) {
+	if (!ignore_music) {
 		BGM.volume(music_on ? 0.8 - totalPoints * 0.015 : 0.0);
 		for (var tree=0; tree<3; tree++) {
 			var theme;
