@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+        <title>Season 6 Mastery Calculator for League of Legends</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+		 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+		<script type="text/javascript" src="mousewheel/jquery.mousewheel.js"></script>
+		<script type="text/javascript" src="howler/howler.js"></script>
+        <script type="type/javascript">
+            // Preload sprites
+            (new Image()).src = "images/button-icons.jpg";
+            (new Image()).src = "images/frames.png";
+			(new Image()).src = "images/keystone-bars.png";
+            (new Image()).src = "images/tree-icons.png";
+        </script>
+    </head>
+    <body>
+        <div id="s2masteries">
+            <div class="art-top"></div>
+            <div class="art-bottom"></div>
+            <div id="panel">
+                <div class="left">
+                    <div id="points">
+                        <span>Points Available: </span><span class="count"></span>
+                    </div>
+                </div>
+                <div class="center">
+                    <a id="exportLink" href="#">Link</a>
+                </div>
+                <div class="right">
+                    <button id="return">Return Points</button>
+                </div>
+                <div id="tree-summaries"></div>
+            </div>
+            <div id="calculator"></div>
+			<div id="footer">
+				<div id="audio-controls" display = "none">
+					<div id="mute-music">Volume (click to mute music)</div>
+					<div id="volume"></div>
+				</div>
+				Credit to <a href="http://www.reddit.com/user/rhysgx94">Hudzen</a> for the season 3 version and to DPatti for the season 2 version.
+				<a href="https://github.com/dpatti/league-mastery-calc" style="text-decoration:none;color:red">Source</a>.<br>
+				Season 6 adaptation and sound by <a href="http://www.reddit.com/user/lukeatlook" style="text-decoration: none">Pyro</a> (aka lukeatlook). 
+				All assets (including the sounds) belong to Riot Games.
+			</div>
+			
+        </div>
+
+        <script type="text/javascript" src="data.js"></script>
+		<script type="text/javascript" src="music.js"></script>
+        <script type="text/javascript" src="calculator.js"></script>
+		<center>
+			
+		</center>
+    </body>
+</html>
+    
