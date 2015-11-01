@@ -101,9 +101,8 @@ function deltaMastery(tree, index, rank, deltaR) {
 			if (MUSIC && action_sound == sounds_unlock) action_sound = sounds_add;
 		}
 		// Check if we should go 0-5 instantly
-		else if (deltaR > 0 && state[tree][index] || 0 == 0 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
+		else if (deltaR > 0 && data[tree][index].ranks > 1 && (state[tree][index] || 0) == 0 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
 			deltaR = data[tree][index].ranks;
-				
 		setState(tree, index, rank, deltaR);
 	}
 }
