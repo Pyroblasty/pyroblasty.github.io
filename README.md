@@ -1,4 +1,4 @@
-League of Legends:  Mastery Calculator
+League of Legends: Mastery Calculator
 ======================================
 
 This project was designed to experiment with the new mastery changes that came
@@ -9,16 +9,22 @@ link so that you may share a build with other players. The calculator does not
 rely on any server technology, and thus may be saved and used offline if
 desired.
 
+The season 6 version features mousewheel support, new mastery system, and 
+(optionally) sound support. Treat it as a work-in-progress. Considering it has
+been worked on by three different people who never communicated with one another,
+it should provide the authentic LoL client experience.
+
 Demo
 ----
 
-<http://dpatti.github.com/league-mastery-calc/>
+<http://pyroblasty.github.com/>
 
 Contributors
 ------------
 
+* [Doug Patti](https://github.com/dpatti) - Author of the original season 2 version
 * [@wonderfulheaven](https://twitter.com/wonderfulheaven) - Season 3 data update
-* [@pyroblasty] - Team Builder music upgrade
+* [Pyro](http://reddit.com/user/lukeatlook) - Season 6 data + sound upgrade
 
 License
 -------
