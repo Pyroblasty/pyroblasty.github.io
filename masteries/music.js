@@ -62,12 +62,12 @@ function mute_music() {
 		BGM_o = new Howl({urls:[CURSE_PLS["offense"]], volume: 0.0, loop: true, onload: launch_themes});
 		BGM_d = new Howl({urls:[CURSE_PLS["defence"]], volume: 0.0, loop: true, onload: launch_themes});
 		BGM_u = new Howl({urls:[CURSE_PLS["utility"]], volume: 0.0, loop: true, onload: launch_themes});
-		sounds_add = new Howl({urls:[CURSE_PLS["click"]]});
-		sounds_remove = new Howl({urls:[CURSE_PLS["remove"]]});
-		sounds_unlock = new Howl({urls:[CURSE_PLS["unlock"]]});
-		sounds_peak = new Howl({urls:[CURSE_PLS["peak"]]});
-		sounds_return = new Howl({urls:[CURSE_PLS["flush"]]});
-		sounds_30 = new Howl({urls:[CURSE_PLS["full"]]});
+		sounds_add = new Howl({urls:[CURSE_PLS["click"]], volume: 0.5});
+		sounds_remove = new Howl({urls:[CURSE_PLS["remove"]], volume: 0.5});
+		sounds_unlock = new Howl({urls:[CURSE_PLS["unlock"]], volume: 0.5});
+		sounds_peak = new Howl({urls:[CURSE_PLS["peak"]], volume: 0.5});
+		sounds_return = new Howl({urls:[CURSE_PLS["flush"]], volume: 0.5});
+		sounds_30 = new Howl({urls:[CURSE_PLS["full"]], volume: 1.0});
 		
 		MUSIC = true;
 	}

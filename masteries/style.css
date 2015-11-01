@@ -296,6 +296,9 @@ button:active {
 #tooltip .Resolve {
     color: #46a3ee;
 }
+#soundinfo {
+	font-size: 14px;
+}
 
 #footer {
     width: 920px;
