@@ -17,7 +17,7 @@ it should provide the authentic LoL client experience.
 Demo
 ----
 
-<http://pyroblasty.github.com/>
+<http://pyroblasty.github.com/masteries/>
 
 Contributors
 ------------
