@@ -87,13 +87,6 @@ function drawCalculator() {
 // L
 function deltaMastery(tree, index, rank, deltaR) {
 	if (isValidState(tree, index, rank, deltaR)) {
-		// L
-		if (MUSIC) {
-			if (deltaR > 0) 
-				action_sound = (data[tree][index].tier == 5) ? sounds_peak : (rank + deltaR == data[tree][index].ranks ? sounds_unlock : sounds_add);
-			else 
-				action_sound = sounds_remove;
-		}
 		var previous = masteryTierFull(tree, index);
 		// If we're removing points from alternative mastery
 		if (previous >= 0 && deltaR > 0)
@@ -104,6 +97,13 @@ function deltaMastery(tree, index, rank, deltaR) {
 		// Check if we should go 0-5 instantly
 		else if (deltaR > 0 && state[tree][index] || 0 == 0 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
 			deltaR = data[tree][index].ranks;
+		// L
+		if (MUSIC) {
+			if (deltaR > 0) 
+				action_sound = (data[tree][index].tier == 5) ? sounds_peak : (rank + deltaR == data[tree][index].ranks ? sounds_unlock : sounds_add);
+			else 
+				action_sound = sounds_remove;
+		}
 		setState(tree, index, rank, deltaR);
 	}
 }
