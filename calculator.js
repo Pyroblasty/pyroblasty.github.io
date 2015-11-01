@@ -13,7 +13,6 @@ var TIER_REQS = [0, 5, 6, 11, 12, 17];
 var TREE_OFFSET = 276;
 var SPACING = {margin_left: 44, margin_top: 20, margin_keystone: 35, spacing_x: 13, spacing_y: 20}
 var BUTTON_SIZE = 54;
-//var MUSIC = false;
 var state = [{}, {}, {}];
 var totalPoints = 0;
 var buttonClasses = ["unavailable", "available", "full"];
@@ -649,10 +648,7 @@ $(function(){
             $("<div>")
         );
     }
-	
-	//L
-	if (MUSIC) $("#mute-music").click(mute_music);
-	
+		
     // Once set up, load if hash present
     if (document.location.hash != "")
         updateMasteries();

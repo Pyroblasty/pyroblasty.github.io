@@ -277,7 +277,6 @@ button:active {
 .num-full {
     color: #d4b654;
 }
-/* ZROBIĆ KOPIE NUM- DLA TOOLTIP */
 
 .buttonFrame  {
 	width: 76px;
@@ -286,36 +285,6 @@ button:active {
 	left: -11px;
 	top: -11px;
 	background: url(images/frames.png);
-}
-
-.requirement {
-    width: 21px;
-    position: absolute;
-    background: url(images/req-bars.png);
-}
-.requirement.unavailable {
-    background-position: 0px 0px;
-}
-.requirement.available {
-    background-position: -21px 0px;
-}
-.requirement.full {
-    background-position: -42px 0px;
-}
-
-.keystone {
-    height: 21px;
-    position: absolute;
-    background: url(images/keystone-bars.png);
-}
-.keystone.unavailable {
-    background-position: 0px 0px;
-}
-.keystone.available {
-    background-position: 0px -21px;
-}
-.keystone.full {
-    background-position: 0px 0px;
 }
 
 #tooltip .Ferocity {
@@ -329,23 +298,19 @@ button:active {
 }
 
 #footer {
-    width: 840px;
+    width: 920px;
     height: 80px;
     position: relative;
+	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-}
-#mute-music  {
-	font-size: 16px;
-	margin-left: auto;
-	margin-right: auto;
-	cursor: pointer;
 }
 
 #volume{
 	width: 100px;
 	height: 13px;
+	margin-top: 5px;
 	margin-left: auto;
 	margin-right: auto;
 	cursor: pointer;

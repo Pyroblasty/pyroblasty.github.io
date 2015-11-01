@@ -1,6 +1,5 @@
-var MUSIC = true; // global variable for the purpose of making a version without sound
-
-// when i was trying to put it on a free hosting they did not allow mp3 file,s i guess github wouldn't either
+// when i was trying to put it on a free hosting they did not allow mp3 file, so i guess github wouldn't either
+// these files are not loaded if the user didnt click "sound on"
 var CURSE_PLS = [];
 CURSE_PLS["background"] = "http://media-titanium.cursecdn.com/audio/0/807/masteries_music_general.mp3";
 CURSE_PLS["offense"] = "http://media-titanium.cursecdn.com/audio/0/808/masteries_music_offense.mp3";
@@ -13,15 +12,13 @@ CURSE_PLS["unlock"] = "http://media-titanium.cursecdn.com/audio/0/792/global-but
 CURSE_PLS["peak"] = "http://media-titanium.cursecdn.com/audio/0/804/groupfinder-player_ready.mp3";
 CURSE_PLS["flush"] = "http://media-titanium.cursecdn.com/audio/0/798/groupfinder_player_leaves.mp3";
 
+var MUSIC = false; // does not cause the crime of hotlinking to excessive levels if you don't turn on the music
+
 var themes_count = 0; // counter for loading themes
 var BGM, BGM_o, BGM_d, BGM_u; // we don't load the themes if the user does not request it
-var sounds_add = new Howl({urls:[CURSE_PLS["click"]]});
-var sounds_remove = new Howl({urls:[CURSE_PLS["remove"]]});
-var sounds_unlock = new Howl({urls:[CURSE_PLS["unlock"]]});
-var sounds_peak = new Howl({urls:[CURSE_PLS["peak"]]});
-var sounds_return = new Howl({urls:[CURSE_PLS["flush"]]});
+var sounds_add, sounds_remove, sounds_unlock, sounds_peak, sounds_return;
 var action_sound = null;
-var ignore_music = true; // does not bring the crime of hotlinking to excessive levels if you don't turn on the music
+var ignore_music = true; 
 var music_on = false; // the actual music on/off switch. does not turn off sounds.
 
 function calculate_volume(level) {
@@ -30,8 +27,9 @@ function calculate_volume(level) {
 	return volume;
 }
 
+// This is supposed to be simple and work flawlessly, but sometimes it behaves in a weird way.
 function updateMusic() {
-	if (!ignore_music) {
+	if (MUSIC) {
 		BGM.volume(music_on ? 0.8 - totalPoints * 0.015 : 0.0);
 		for (var tree=0; tree<3; tree++) {
 			var theme;
@@ -63,25 +61,30 @@ function launch_themes() {
 }
 
 function mute_music() {
-	//if (music_on) Howler.mute();
-	//else Howler.unmute();
+	if (music_on) Howler.mute();
+	else Howler.unmute();
 	music_on = !music_on;
-	if (music_on && ignore_music)
+	if (music_on && !MUSIC)
 	{
 		BGM = new Howl({urls:[CURSE_PLS["background"]], volume: 0.8, loop: true, onload: launch_themes});
 		BGM_o = new Howl({urls:[CURSE_PLS["offense"]], volume: 0.0, loop: true, onload: launch_themes});
 		BGM_d = new Howl({urls:[CURSE_PLS["defence"]], volume: 0.0, loop: true, onload: launch_themes});
 		BGM_u = new Howl({urls:[CURSE_PLS["utility"]], volume: 0.0, loop: true, onload: launch_themes});
-		ignore_music = false;
+		sounds_add = new Howl({urls:[CURSE_PLS["click"]]});
+		sounds_remove = new Howl({urls:[CURSE_PLS["remove"]]});
+		sounds_unlock = new Howl({urls:[CURSE_PLS["unlock"]]});
+		sounds_peak = new Howl({urls:[CURSE_PLS["peak"]]});
+		sounds_return = new Howl({urls:[CURSE_PLS["flush"]]});
+		
+		MUSIC = true;
 	}
 	updateMusic();
+	$("#mute-music").text(music_on ? "Sound on" : "Sound off");
 }
 
 $(function(){
-	if (MUSIC) {
-		$("#audio-controls").css({display: "inline"});
-	}
 	Howler.volume(0.25);
+	$("#mute-music").click(mute_music);
 	$("#volume").slider({
 		min: 0,
 		max: 100,
@@ -90,4 +93,5 @@ $(function(){
 		animate: true,
 		slide: function(event, ui) { Howler.volume((ui.value) / 100); }
 		});
+	Howler.mute();
 });
