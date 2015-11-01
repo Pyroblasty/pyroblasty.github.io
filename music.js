@@ -22,7 +22,7 @@ var sounds_peak = new Howl({urls:[CURSE_PLS["peak"]]});
 var sounds_return = new Howl({urls:[CURSE_PLS["flush"]]});
 var action_sound = null;
 var ignore_music = true; // does not bring the crime of hotlinking to excessive levels if you don't turn on the music
-var music_on = true; // the actual music on/off switch. does not turn off sounds.
+var music_on = false; // the actual music on/off switch. does not turn off sounds.
 
 function calculate_volume(level) {
 	var volume = 0.0;
