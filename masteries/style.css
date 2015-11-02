@@ -17,7 +17,7 @@ body {
 }
 
 #panel {
-    width: 932px; /* was 920? */
+    width: 828px; /* was 920 */
     height: 80px;
     position: relative;
     cursor: default;
