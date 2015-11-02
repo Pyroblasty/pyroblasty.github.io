@@ -4,21 +4,24 @@ body {
 
 #s2masteries {
     background: url(images/content_tile.jpg) repeat-y;
+    background-size: 100% auto;
     background-color: #EFE0AA;
     font: 11px Arial, Helvetica, sans-serif;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     margin: 20px auto; /* was 50 */
-    width: 932px; /* was 932 */
-    height: 624px;
-    padding: 40px; /* was 40 */
+    width: 840px; /* was 932 */
+    height: 624px; /* was 624 */
+    padding: 30px; /* was 40 */
     position: relative;
 }
 
 #panel {
-    width: 828px; /* was 920 */
+    width: 800px; /* was 920 */
     height: 80px;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
     cursor: default;
 }
@@ -34,7 +37,8 @@ body {
 .art-top {
     width: 100%;
     height: 234px;
-    background: url(images/content_top.png);
+    background: url(images/content_top.png) no-repeat;
+    background-size: 100%;
     position: absolute;
     top: 0;
     left: 0;
@@ -43,7 +47,9 @@ body {
 .art-bottom {
     width: 100%;
     height: 150px;
-    background: url(images/content_bot.jpg);
+    background: url(images/content_bot.jpg) no-repeat;
+    background-size: 100%;
+    background-position: left bottom;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -301,7 +307,7 @@ button:active {
 }
 
 #footer {
-    width: 920px;
+    width: 100%;
     height: 80px;
     position: relative;
 	margin-top: 10px;
