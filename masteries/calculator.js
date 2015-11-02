@@ -20,7 +20,7 @@ var ENGLISH = {
     swap_warning: "Choosing this will remove points in",
     doubleclick_to_reset: "Double click to reset tree",
 };
-var LANGUAGE = (languagePack == undefined) ? ENGLISH : languagepack;
+var LANGUAGE = (typeof(languagePack !== undefined)) ? languagepack : ENGLISH;
 
 var MAX_POINTS = 30;
 var TIER_REQS = [0, 5, 6, 11, 12, 17];
