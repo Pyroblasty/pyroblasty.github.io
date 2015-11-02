@@ -297,7 +297,7 @@ function masteryTooltipBody(mastery, rank)  {
         desc = desc.replace(/#/, Math.round(mastery.perLevel[rank]*100)/100);
     }
 	if (mastery.perLevel2) {
-        desc = desc.replace(/#/, Math.round(mastery.perLevel[rank]*100)/100);
+        desc = desc.replace(/#/, Math.round(mastery.perLevel2[rank]*100)/100);
     }
     return desc;
 }
