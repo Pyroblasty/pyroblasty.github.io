@@ -135,7 +135,7 @@ function drawButton(tree, index) {
             	.addClass("buttonFrame")
             	.css({
             	    backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
-                                        (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
+                                        (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -153 : 0) ) : 0) + "px", // Should be 152 not 153 but I'm too lazy
                 }) // Why? Well: it works. Seriously though, we're using a 3x3 spritemap here
             )
             .append(
