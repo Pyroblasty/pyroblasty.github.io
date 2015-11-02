@@ -8,7 +8,19 @@ var treeOffsets = [
     data[0].length,
     data[0].length + data[1].length
 ];
-var LANGUAGE = languagePack_English;
+// I added language support because @Awethon translated this to Russian
+// In order to translate the calculator to another language, also change data.js and index.html
+// Then add a new file with variable "languagePack" in it, and you won't have to change a thing in calculator.js
+// Remember to add that file in index.html
+var English = {
+    tree_names: ["Ferocity", "Cunning", "Resolve"],
+    rank: "Rank",
+    requires: "Requires",
+    points_in: "points in",
+    swap_warning: "Choosing this will remove points in",
+};
+
+var LANGUAGE = languagePack || English; // if you want 
 var MAX_POINTS = 30;
 var TIER_REQS = [0, 5, 6, 11, 12, 17];
 var TREE_OFFSET = 276;
