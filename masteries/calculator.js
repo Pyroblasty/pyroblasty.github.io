@@ -2,7 +2,7 @@ var treeNames = [
     "Ferocity",
     "Cunning",
     "Resolve",
-];
+]; // Used also for purposes of the CSS, so the names have to match.
 var treeOffsets = [
     0,
     data[0].length,
@@ -13,11 +13,12 @@ var TIER_REQS = [0, 5, 6, 11, 12, 17];
 var TREE_OFFSET = 276;
 var SPACING = {margin_left: 44, margin_top: 20, margin_keystone: 35, spacing_x: 13, spacing_y: 20}
 var BUTTON_SIZE = 54;
-var state = [{}, {}, {}];
+var state = [{}, {}, {}]; // It's empty at the beginning, so it's important to refer to this with || 0
 var totalPoints = 0;
 var buttonClasses = ["unavailable", "available", "full"];
 var rankClasses = ["num-unavailable", "num-available", "num-full"];
 var counterClasses = ["counter-unavailable", "counter-available", "counter-full"];
+// Seems redundant but makes it way easier with the CSS.
 
 function drawCalculator() {
     for (var tree = 0; tree < 3; tree++)
@@ -84,40 +85,39 @@ function drawCalculator() {
     $("#points>.count").text(MAX_POINTS);
 }
 
-// L
+// Adding or removing points from a mastery
 function deltaMastery(tree, index, rank, deltaR) {
-	if (isValidState(tree, index, rank, deltaR)) {
-		if (MUSIC) {
-			if (deltaR > 0) 
-				action_sound = (data[tree][index].tier == 5) ? sounds_peak : (rank + deltaR == data[tree][index].ranks ? sounds_unlock : sounds_add);
-			else 
-				action_sound = sounds_remove;			
-		}
-		var previous = masteryTierFull(tree, index);
-		// If we're removing points from alternative mastery
-		if (previous >= 0 && deltaR > 0)
-		{
-			setState(tree, previous, state[tree][previous], -deltaR);
-			if (MUSIC && action_sound == sounds_unlock) action_sound = sounds_add;
-		}
-		else {
-			// Check if we should go 0-5 instantly
-			if (deltaR > 0 && masteryTierEmpty(tree, data[tree][index].tier) && data[tree][index].ranks > 1 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
-				deltaR = data[tree][index].ranks;
-			// Check if it is the last point spent
-			if (MUSIC && totalPoints + deltaR == MAX_POINTS) sounds_30.play();
-		}
-		setState(tree, index, rank, deltaR);
-	}
+    if (isValidState(tree, index, rank, deltaR)) {
+        if (MUSIC) {
+            if (deltaR > 0) 
+                action_sound = (data[tree][index].tier == 5) ? sounds_peak : (rank + deltaR == data[tree][index].ranks ? sounds_unlock : sounds_add);
+            else
+                action_sound = sounds_remove;
+        }
+        var previous = masteryTierFull(tree, index);
+        // If we're removing points from alternative mastery
+        if (previous >= 0 && deltaR > 0) {
+            setState(tree, previous, state[tree][previous], -deltaR);
+            if (MUSIC && action_sound == sounds_unlock) action_sound = sounds_add;
+        } else {
+            // Check if we should go 0-5 instantly
+            if (deltaR > 0 && masteryTierEmpty(tree, data[tree][index].tier) && data[tree][index].ranks > 1 && totalPoints + data[tree][index].ranks <= MAX_POINTS)
+                deltaR = data[tree][index].ranks;
+                // Check if it is the last point spent
+                if (MUSIC && totalPoints + deltaR == MAX_POINTS) sounds_30.play();
+        }
+        setState(tree, index, rank, deltaR);
+    }
 }
 
+// Drawing the mastery button
 function drawButton(tree, index) {
     var spritePos = masterySpritePos(tree, index);
     var buttonPos = masteryButtonPosition(tree, index);
     var status = data[tree][index].tier == 0 ? "available" : "unavailable";
     var rank = 0;
-	var tier = data[tree][index].tier;
-		
+    var tier = data[tree][index].tier;
+    
     $("#calculator").append(
         $("<div>")
             .addClass("button")
@@ -126,24 +126,26 @@ function drawButton(tree, index) {
             .css({
                 left: buttonPos.x+"px",
                 top: buttonPos.y+"px",
-                // Sprite has three columns: 0px is color, -54 is desaturated and -108px is black and white
+                // Sprite has three columns: 0px is color, -54 is half-desaturated and -108px is black and white
                 backgroundPosition: (status == "full" ? -2 : status == "available" ? -2 - BUTTON_SIZE : -2 - 2*BUTTON_SIZE) + "px " + 
                                     (spritePos - 2) + "px",
             })
 			.append(
 				$("<div>")
 					.addClass("buttonFrame")
-					.css({ // Why? Well: it works
+					.css({ 
 						backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
-                                    (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
-						})
+                                                                    (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
+						}) // Why? Well: it works. Seriously though, we're using a 3x3 spritemap here
 			)
             .append(
                 $("<div>")
                     .addClass("counter")
                     .addClass("counter-"+status)
                     .text("0/" + data[tree][index].ranks)
-					.css({visibility: data[tree][index].tier % 2 == 0 ? "visible" : "hidden"}) // L
+					.css({visibility: data[tree][index].tier % 2 == 0 ? "visible" : "hidden"})
+					// This should have been conditioned way back at the addClass() part,
+					// but I'm too stupid to do it, so instead of not adding the counter we're hiding it
             )
             .mouseover(function(event){
                 var tooltipText = masteryTooltip(tree, index, rank);
@@ -167,10 +169,12 @@ function drawButton(tree, index) {
                         break;
                 }
             })
-			.mousewheel(function(event, delta){deltaMastery(tree, index, rank, delta);}) 
+            // Simple and easy mousewheel support thanks to the included library
+            .mousewheel(function(event, delta){deltaMastery(tree, index, rank, delta);}) 
             .data("update", function() {
                 rank = state[tree][index] || 0;
-                if (rank > 0) { // used to be "== data[tree][index].ranks"
+                // used to be "== data[tree][index].ranks" before s6 - now we're showing yellow color at all times
+                if (rank > 0) {
                     status = "full";
                 } else {
                     // check if available
@@ -179,13 +183,12 @@ function drawButton(tree, index) {
                     else
                         status = "unavailable";
 
-
                     // check if points can be spent
                     if (totalPoints >= MAX_POINTS)
                         if (masteryTierFull(tree, index) >= 0) // used to be "rank > 0"
                             status = "available";
                         else
-							status = "unavailable";
+			    status = "unavailable";
                 }
                 // change status class
                 if ( !$(this).hasClass(status) ) {
@@ -203,23 +206,15 @@ function drawButton(tree, index) {
                     counter
                         .removeClass(counterClasses.join(" "))
                         .addClass("counter-"+status)
-						//.css({visibility: data[tree][index].tier % 2 == 0 ? "visible" : "hidden"}) // L
+			//.css({visibility: data[tree][index].tier % 2 == 0 ? "visible" : "hidden"}) // L
                 }
-				$(this).find(".buttonFrame").css({
-							backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
-                                    (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
-							});
+                $(this).find(".buttonFrame")
+                    .css({
+                    	backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
+                                            (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px", 
+                    });
 				
-                // change keystone status
-				/*
-                var keystoneLink = $(this).data("keystoneLink");
-                if (keystoneLink != null) {
-                    if ( !keystoneLink.hasClass(status) ) {
-                        keystoneLink
-                            .removeClass(buttonClasses.join(" "))
-                            .addClass(status);
-                    }
-                }*/
+                
                 // force tooltip redraw
                 if ($(this).data("hover"))
                     $(this).mouseover();
@@ -227,6 +222,7 @@ function drawButton(tree, index) {
     );
 }
 
+// tooltip used for informing about resetting trees
 function customTooltip(tooltip, tooltipText) {
     tooltip.addClass("custom");
     tooltip.children(":not(p.first)").hide();
@@ -283,6 +279,7 @@ function masteryTooltip(tree, index, rank) {
     return text;
 }
 
+// Extracting info from data.js
 function masteryTooltipBody(mastery, rank)  {
     // Rank 1 is index 0, but Rank 0 is also index 0
     rank = Math.max(0, rank - 1);
@@ -302,11 +299,12 @@ function masteryTooltipBody(mastery, rank)  {
     return desc;
 }
 
+// Writes down a prompt "Requires points in X" or "This will remove your current mastery"
 function masteryTooltipReq(tree, index) {
     var missing = [];
     var pointReq = masteryPointReq(tree, index)
     if (pointReq > treePoints(tree))
-        missing.push("Requires " + pointReq + " point(s) in " + treeNames[tree][0].toUpperCase() + treeNames[tree].slice(1));
+        missing.push("Requires " + pointReq + " point(s) in " + treeNames[tree]); // used to be [0].toUpperCase() + treeNames[tree].slice(1));
     if ((state[tree][index] || 0) < data[tree][index].ranks) {
 		var existing = masteryTierFull(tree, index);
 		if (existing >= 0) //If we can put more points here, but it will remove points in your current mastery
@@ -316,7 +314,7 @@ function masteryTooltipReq(tree, index) {
     return missing.join("\n");
 }
 
-// L
+// Positions of the buttons. Uses constants specified in the beginning of the script.
 function masteryButtonPosition(tree, index) {
     var idx = data[tree][index].index - 1;
     var ix = idx % 4;
@@ -326,7 +324,8 @@ function masteryButtonPosition(tree, index) {
     // padding for tree
     x += TREE_OFFSET * tree;
     // base padding
-	x += SPACING.margin_left;
+    x += SPACING.margin_left;
+    // extra padding if it's one of the first two tiers of keystones
     if (iy % 2 == 1 && iy != 5) x += SPACING.margin_keystone;
     y += SPACING.margin_top;
     // padding for spacing
@@ -340,10 +339,15 @@ function masterySpritePos(tree, index) {
     return 0 - BUTTON_SIZE * (treeOffsets[tree] + index);
 }
 
+// the s2/s3 script did not have the Tier property in data
+// this is why the function exists. why I left it? well I just did
 function masteryTier(tree, index) {
     return data[tree][index].tier;
 }
 
+// constant is specified in the beginning of the script
+// this could be also calculated as (t%2)*5 + t/2
+// but that would be way less transparent
 function masteryPointReq(tree, index) {
     return TIER_REQS[masteryTier(tree, index)];
 }
@@ -357,6 +361,7 @@ function masteryTierFull(tree, index) {
     return -1;
 }
 // Same as above, but for the case of preventing invalid 0-5 acceleration.
+// Returns true if there are no points put into the tier.
 function masteryTierEmpty(tree, tier) {
 	for (var i in data[tree])
 		if (data[tree][i].tier == tier && (state[tree][i] || 0) > 0) 
@@ -364,6 +369,7 @@ function masteryTierEmpty(tree, tier) {
     return true;
 }
 
+// Sums up all points spent in the tree.
 function treePoints(tree, treeTier) {
     var points = 0;
     for (var i in state[tree])
@@ -372,6 +378,7 @@ function treePoints(tree, treeTier) {
     return points;
 }
 
+// Checks if modifying the mastery is within possibility.
 function isValidState(tree, index, rank, mod) {
     var mastery = data[tree][index];
     if (rank+mod < 0 || rank+mod > mastery.ranks)
@@ -380,15 +387,13 @@ function isValidState(tree, index, rank, mod) {
     // Incrementing
     if (mod > 0) {
         // Check max points
-        if (totalPoints + mod > MAX_POINTS)
-		{
-			// Check if we can add points here by removing them from the alternative mastery
-			if (masteryTierFull(tree, index) >= 0)
-				return true;
-			else
-				return false;
-		}
-
+        if (totalPoints + mod > MAX_POINTS) {
+            // Check if we can add points here by removing them from the alternative mastery
+            if (masteryTierFull(tree, index) >= 0)
+                return true;
+            else
+                return false;
+        }
         // Check this mastery's rank requirements: never account for current rank
         if (masteryPointReq(tree, index) > treePoints(tree) - rank)
             return false;
@@ -422,7 +427,7 @@ function setState(tree, index, rank, mod) {
 
     updateButtons();
     updateLabels();
-	if (MUSIC) updateMusic();
+    if (MUSIC) updateMusic();
     updateLink();
 }
 
@@ -478,6 +483,10 @@ function updateLink() {
         }, 500);
     }
 }
+
+// NOTE: This code was written for the s2 masteries. It could be optimized for s6
+// two-per-rank masteries, but the shortening the links in half is not worth the hassle.
+// Also, they can always change it to 3 per rank.
 
 // There are max 4 points per mastery, or 3 bits each. There is a 1 bit padding
 // that is a flag to determine whether the following 5 bits are a sequence of
@@ -639,7 +648,7 @@ $(function(){
                 .attr("data-idx", tree)
                 .text(treeNames[tree] + ": " + 0)
                 .css({
-                    left: TREE_OFFSET * tree + 50,
+                    left: TREE_OFFSET * tree + 40,
                     cursor: "pointer",
                 })
                 .mouseover(function(){
