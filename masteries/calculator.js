@@ -130,14 +130,14 @@ function drawButton(tree, index) {
                 backgroundPosition: (status == "full" ? -2 : status == "available" ? -2 - BUTTON_SIZE : -2 - 2*BUTTON_SIZE) + "px " + 
                                     (spritePos - 2) + "px",
             })
-			.append(
-				$("<div>")
-					.addClass("buttonFrame")
-					.css({ 
-						backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
-                                                                    (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
-						}) // Why? Well: it works. Seriously though, we're using a 3x3 spritemap here
-			)
+            .append(
+            	$("<div>")
+            	.addClass("buttonFrame")
+            	.css({
+            	    backgroundPosition: (status == "full" ? (tier%2 == 1 ? (tier == 1 ? -152 : -76 * tier) : -76) : status == "available" ? -76 : 0) + "px " + 
+                                        (status == "full" ? (tier == 3 ? -76 : (tier == 5 ? -152 : 0) ) : 0) + "px",
+                }) // Why? Well: it works. Seriously though, we're using a 3x3 spritemap here
+            )
             .append(
                 $("<div>")
                     .addClass("counter")
