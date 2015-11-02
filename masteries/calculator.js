@@ -8,6 +8,7 @@ var treeOffsets = [
     data[0].length,
     data[0].length + data[1].length
 ];
+var LANGUAGE = languagePack_English;
 var MAX_POINTS = 30;
 var TIER_REQS = [0, 5, 6, 11, 12, 17];
 var TREE_OFFSET = 276;
@@ -197,7 +198,7 @@ function drawButton(tree, index) {
                         .addClass(status)
                         .css({
                             backgroundPosition: (status == "full" ? -2 : status == "available" ? -2 - BUTTON_SIZE : -2 - 2*BUTTON_SIZE) + "px " + 
-												(spritePos - 2) + "px",
+                                                (spritePos - 2) + "px",
                         });
                 }
                 // adjust counter
@@ -206,7 +207,6 @@ function drawButton(tree, index) {
                     counter
                         .removeClass(counterClasses.join(" "))
                         .addClass("counter-"+status)
-			//.css({visibility: data[tree][index].tier % 2 == 0 ? "visible" : "hidden"}) // L
                 }
                 $(this).find(".buttonFrame")
                     .css({
@@ -269,7 +269,7 @@ function masteryTooltip(tree, index, rank) {
     var text = {
         tree: tree,
         header: mastery.name,
-        rank: "Rank: " + rank + "/" + mastery.ranks,
+        rank: LANGUAGE['rank'] + ": " + rank + "/" + mastery.ranks,
         rankClass: (rank == mastery.ranks ? rankClasses[2] : (isValidState(tree, index, rank, 1) ? rankClasses[1] : rankClasses[0])),
         req: masteryTooltipReq(tree, index),
         body: masteryTooltipBody(mastery, rank),
@@ -304,11 +304,11 @@ function masteryTooltipReq(tree, index) {
     var missing = [];
     var pointReq = masteryPointReq(tree, index)
     if (pointReq > treePoints(tree))
-        missing.push("Requires " + pointReq + " point(s) in " + treeNames[tree]); // used to be [0].toUpperCase() + treeNames[tree].slice(1));
+        missing.push(LANGUAGE['requires'] + " " + pointReq + " " + LANGUAGE['points_in'] + " " + LANGUAGE['tree_names'][tree]); // used to be [0].toUpperCase() + treeNames[tree].slice(1));
     if ((state[tree][index] || 0) < data[tree][index].ranks) {
 		var existing = masteryTierFull(tree, index);
 		if (existing >= 0) //If we can put more points here, but it will remove points in your current mastery
-			missing.push("Choosing this will remove points in " + data[tree][existing].name + ".");
+			missing.push(LANGUAGE['swap_warning'] + " " + data[tree][existing].name + ".");
     }
 
     return missing.join("\n");
@@ -460,7 +460,7 @@ function updateButtons() {
 
 function updateLabels() {
     for (var tree=0; tree<3; tree++) {
-        $("div[data-idx="+tree+"]").text(treeNames[tree] + ": " + treePoints(tree));
+        $("div[data-idx="+tree+"]").text(LANGUAGE['tree_names'][tree] + ": " + treePoints(tree));
         $("#points>.count").text(MAX_POINTS - totalPoints);
     }
 }
