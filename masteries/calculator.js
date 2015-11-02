@@ -12,15 +12,16 @@ var treeOffsets = [
 // In order to translate the calculator to another language, also change data.js and index.html
 // Then add a new file with variable "languagePack" in it, and you won't have to change a thing in calculator.js
 // Remember to add that file in index.html
-var English = {
+var ENGLISH = {
     tree_names: ["Ferocity", "Cunning", "Resolve"],
     rank: "Rank",
     requires: "Requires",
     points_in: "points in",
     swap_warning: "Choosing this will remove points in",
+    doubleclick_to_reset: "Double click to reset tree",
 };
+var LANGUAGE = (languagePack == undefined) ? ENGLISH : languagepack;
 
-var LANGUAGE = languagePack || English; // if you want 
 var MAX_POINTS = 30;
 var TIER_REQS = [0, 5, 6, 11, 12, 17];
 var TREE_OFFSET = 276;
@@ -658,13 +659,13 @@ $(function(){
                 .addClass("tree-summary")
                 .addClass(treeNames[tree])
                 .attr("data-idx", tree)
-                .text(treeNames[tree] + ": " + 0)
+                .text(LANGUAGE['treeNames'][tree] + ": " + 0)
                 .css({
                     left: TREE_OFFSET * tree + 40,
                     cursor: "pointer",
                 })
                 .mouseover(function(){
-                    customTooltip($("#tooltip").show(), "Double click to reset tree");
+                    customTooltip($("#tooltip").show(), LANGUAGE['doubleclick_to_reset']);
                 })
                 .mouseout(function(){
                     $("#tooltip").hide();
