@@ -73,7 +73,7 @@ var data = [
             name: "Battering Blows",
 			tier: 4,
             ranks: 5,
-            desc: "+# Armor Penetration",
+            desc: "+#% Armor Penetration",
             rankInfo: [1.4, 2.8, 4.2, 5.6, 7],
         },
         {
