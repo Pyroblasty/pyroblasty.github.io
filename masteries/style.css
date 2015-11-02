@@ -9,15 +9,15 @@ body {
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-    margin: 20px auto; /* 50 */
-    width: 932px; /* 932 */
+    margin: 20px auto; /* was 50 */
+    width: 932px; /* was 932 */
     height: 624px;
-    padding: 20px; /* was 40 */
+    padding: 30px; /* was 40 */
     position: relative;
 }
 
 #panel {
-    width: 920px;
+    width: 932px; /* was 920? */
     height: 80px;
     position: relative;
     cursor: default;
