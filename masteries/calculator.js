@@ -639,7 +639,7 @@ $(function(){
                 .attr("data-idx", tree)
                 .text(treeNames[tree] + ": " + 0)
                 .css({
-                    left: TREE_OFFSET * tree + 100,
+                    left: TREE_OFFSET * tree + 50,
                     cursor: "pointer",
                 })
                 .mouseover(function(){
