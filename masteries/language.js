@@ -7,4 +7,4 @@ var languagePack_English = {
     requires: "Requires",
     points_in: "points in",
     swap_warning: "Choosing this will remove points in",
-}
+};
