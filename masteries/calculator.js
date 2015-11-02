@@ -659,7 +659,7 @@ $(function(){
                 .addClass("tree-summary")
                 .addClass(treeNames[tree])
                 .attr("data-idx", tree)
-                .text(LANGUAGE['treeNames'][tree] + ": " + 0)
+                .text(LANGUAGE['tree_names'][tree] + ": " + 0)
                 .css({
                     left: TREE_OFFSET * tree + 40,
                     cursor: "pointer",
