@@ -214,7 +214,7 @@ var data = [
             name: "Windspeaker's Blessing",
 			tier: 5,
             ranks: 1,
-            desc: "Your heals and shields are 10% stronger and increase your target's resistances by 15% for 3 seconds when used on an ally other than yourself.",
+            desc: "Your heals and shields are 10% stronger. Additionally, your shields and heals increase your target's resistances by 15% for 3 seconds when used on an ally other than yourself.",
             rankInfo: [],
         },
     ],
