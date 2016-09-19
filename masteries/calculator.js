@@ -303,9 +303,15 @@ function masteryTooltipBody(mastery, rank)  {
     if (mastery.rankInfo2) {
         desc = desc.replace(/#/, mastery.rankInfo2[rank]);
     }
+    if (mastery.rankInfo3) {
+        desc = desc.replace(/#/, mastery.rankInfo3[rank]);
+    }
 	if (mastery.perLevel) {
         desc = desc.replace(/#/, Math.round(mastery.perLevel[rank]*100)/100);
     }
+    if (mastery.rankInfo4) {
+        desc = desc.replace(/#/, mastery.rankInfo4[rank]);
+    }    
 	if (mastery.perLevel2) {
         desc = desc.replace(/#/, Math.round(mastery.perLevel2[rank]*100)/100);
     }
@@ -339,7 +345,7 @@ function masteryButtonPosition(tree, index) {
     // base padding
     x += SPACING.margin_left;
     // extra padding if it's one of the first two tiers of keystones
-    if (iy % 2 == 1 && iy != 5) x += SPACING.margin_keystone;
+    if ((iy == 3) || ((iy == 1) && (tree == 2))) x += SPACING.margin_keystone;
     y += SPACING.margin_top;
     // padding for spacing
     x += ix * (BUTTON_SIZE + SPACING.spacing_x);
